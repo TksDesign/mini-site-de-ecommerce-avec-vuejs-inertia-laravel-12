@@ -1,0 +1,18 @@
+# tailwind cc
+-npm install -D @tailwindcss/forms
+
+# font aweson
+-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+# Mailtrop
+- 2af7a5856b80e9f1e8fc29c4d8229573
+
+# controller pour la gestion des LINK
+ php artisan make:controller  Auth/RegisterController
+
+# Listing
+ php artisan make:model Listing -a    
+
+# pour afficher les differents routes 
+
+   php artisan route:list
