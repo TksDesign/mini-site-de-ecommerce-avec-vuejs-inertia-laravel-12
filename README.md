@@ -16,3 +16,7 @@
 # pour afficher les differents routes 
 
    php artisan route:list
+    php artisan migrate:fresh
+    php artisan db:seed
+# pour lier les images du public stroage dans le dossier public
+   -php artisan storage:link

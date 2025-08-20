@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
 use App\Models\Listing;
+use Inertia\Inertia;
 
 class ListingController extends Controller
 {
@@ -13,7 +14,11 @@ class ListingController extends Controller
      */
     public function index()
     {
-        //
+        $listings=Listing::with('user')->latest()->paginate(6); //pour afficher 6 paginate avec le nom d'utilisateur
+        return Inertia::render('Home',[
+            'listings'=>$listings
+        ]);
+
     }
 
     /**

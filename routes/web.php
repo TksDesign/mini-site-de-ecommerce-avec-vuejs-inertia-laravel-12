@@ -20,8 +20,9 @@ Route::middleware(['auth'])->group(function () {
     ->name('profile.destroy');
 });
 
+
+Route::get('/', [ListingController::class,'index'])->name('home');
 Route::resource('listing',ListingController::class);
 
-Route::inertia('/', 'Home')->name('home');
 
 require __DIR__ . '/auth.php';
