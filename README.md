@@ -20,3 +20,10 @@
     php artisan db:seed
 # pour lier les images du public stroage dans le dossier public
    -php artisan storage:link
+
+# Lodash
+-une library pour la recherche en fin deviter les rebons 
+-npm i --save lodash
+
+# recherche
+  -la recherche concer les class listing.php ListingController:backend , home.vue card.vue:frontend
