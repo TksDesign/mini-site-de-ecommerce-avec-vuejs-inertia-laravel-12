@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // creer deux user et 10 listing
         User::factory(2)->create();
-        Listing::factory(20)->create();
+        Listing::factory()->create();
 
     }
 }

@@ -32,6 +32,8 @@ const show = ref(false);
                 text-white rounded-lg border-slate-700 border overflow-hidden w-40 ">
                             <Link :href="route('profile.edit')" class="block w-full p-4
                             hover:bg-slate-700 text-left">Profile</Link>
+                            <Link :href="route('listing.create')" class="block w-full p-4
+                            hover:bg-slate-700 text-left">New listing</Link>
                             <Link :href="route('dashboard')" class="block w-full p-4
                             hover:bg-slate-700 text-left">Dashboard</Link>
                             <!-- le as bouton signifie qu'on veux l'ouvrir sur une autre page -->

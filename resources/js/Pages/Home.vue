@@ -17,6 +17,8 @@ const form = ref({
     search: props.searchTerm
 
 });
+// recupere le nom de l'utilisateur correspondant a l'id
+const username=params.user_id ? props.listings.data.find(i=>i.user_id===Number(params.user_id)).user.name:null;
 
 
 watch(
@@ -35,7 +37,7 @@ watch(
 
 <template>
     <Header title=" | Home" />
-    <div class="flex items-center justify-center mb-4">
+    <div class="flex flex-col items-center justify-center mb-4 gap-2">
         <div class="w-2/4 mb-4">
             <form @submit.prevent="search">
                 <div class="relative mt-1 rounded-md">
@@ -52,6 +54,18 @@ watch(
                 </div>
             </form>
         </div>
+        <div class=" flex items-center gap-3">
+            <Link v-if="params.tag" :href="route('home', { ...params, tag: null, page: null })"
+                class="group p-1 bg-indigo-400 rounded text-white">
+            {{ params.tag }}
+            <i class="fa-solid fa-xmark text-xs text-slate-300 group-hover:text-white animate-pulse"></i>
+            </Link>
+            <Link v-if="params.user_id" :href="route('home', { ...params, user_id: null, page: null })"
+                class="group p-1 bg-indigo-400 rounded text-white">
+            {{ username }}
+            <i class="fa-solid fa-xmark text-xs text-slate-300 group-hover:text-white animate-pulse"></i>
+            </Link>
+        </div>
     </div>
     <div>
         <div v-if="Object.keys(listings.data).length">
@@ -65,7 +79,7 @@ watch(
             </div>
         </div>
         <div v-else
-            class="w-full h-screen flex flex-col text-9xl  text-teal-950 items-center justify-start mt-30 ml-20">
+            class="w-full h-screen flex flex-col text-[clamp(20px,10vw,420px)]  text-teal-950 items-center justify-start mt-30 ml-[clamp(1px,30%,20px)]">
             <div class="flex flex-row gap-12">
                 <div class="flex flex-col">
                     <span class=" font-black">Au</span>
