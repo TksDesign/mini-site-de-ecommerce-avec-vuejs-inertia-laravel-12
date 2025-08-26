@@ -61,13 +61,14 @@ class ListingController extends Controller
 
         $fields = $request->validate([
             'title' => ['required', 'max:255'],
-            'desc' => ['required', 'max:255'],
+            'desc' => ['required', 'max:5000'],
             'tags' => ['nullable', 'string'],
             'email' => ['nullable', 'email'],
             'link' => ['nullable', 'url'],
             'image' => ['nullable', 'file', 'max:3072'],
 
         ]);
+
         // enregistrer dans la base de donnée
         if ($request->hasFile('image')) {
             $fields['image'] = Storage::disk('public')->put(
@@ -76,7 +77,7 @@ class ListingController extends Controller
             ); //ou va etre enregistrer l'image
         };
         // gerer le filtrage de tags
-        $fields['tags']=implode(',',array_unique(array_filter(array_map('trim', explode(',', $request->tags)))));
+        $fields['tags'] = implode(',', array_unique(array_filter(array_map('trim', explode(',', $request->tags)))));
 
         // listing vient de l user.php qui represent la fonction de laison entre user et listing
         $request->user()->listing()->create($fields);
@@ -88,7 +89,10 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-        //
+        return Inertia::render('Listing/Show', [
+            'listing' => $listing,
+            'user' => $listing->user->only(['name','id']) //pour limiter les infos sur l'utilisateur au nom et a l'id
+        ]);
     }
 
     /**

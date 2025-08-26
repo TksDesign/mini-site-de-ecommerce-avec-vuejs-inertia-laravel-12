@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import Card from '../components/Card.vue';
 import PaginationLinks from '../components/PaginationLinks.vue';
-import { router, useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import { throttle } from 'lodash';
 
 

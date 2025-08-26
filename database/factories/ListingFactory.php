@@ -20,7 +20,7 @@ class ListingFactory extends Factory
         return [
             'user_id'=>fake()->randomElement([1,2]),
             'title'=>fake()->sentence(10),
-            'desc'=>fake()->paragraph(12),
+            'desc'=>fake()->paragraph(3,true),
             'email'=>fake()->email(),
             'link'=>fake()->url(),
             'tags'=>fake()->randomElement([

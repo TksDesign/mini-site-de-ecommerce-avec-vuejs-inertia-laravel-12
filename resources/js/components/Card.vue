@@ -33,9 +33,9 @@ const selectTags = (tag) => {
     dark:bg-slate-800 h-full flex flex-col justify-between">
         <div>
             <!-- image -->
-            <Link href="">
+            <Link :href="route('listing.show', listing.id)"> <!-- on se dirige en suite dans le listingcontroller show-->
             <img :src="listing.image ? `/storage/${listing.image}` : '/storage/images/listing/default.jpg'"
-                alt="image de produit" class="w-full h-48 bg-slate-300 object-cover object-center">
+                alt="image de produit" class="w-full h-48 bg-slate-300 object-cover object-center ">
             </Link>
             <!-- titke  -->
             <div class="p-4">
