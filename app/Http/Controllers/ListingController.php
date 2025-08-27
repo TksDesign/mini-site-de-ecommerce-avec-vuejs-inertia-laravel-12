@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\NotSuspended;
-use App\Http\Requests\StoreListingRequest;
-use App\Http\Requests\UpdateListingRequest;
 use App\Models\Listing;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -164,7 +162,7 @@ class ListingController extends Controller implements HasMiddleware
         $fields['tags'] = implode(',', array_unique(array_filter(array_map('trim', explode(',', $request->tags)))));
 
         // listing vient de l user.php qui represent la fonction de laison entre user et listing
-        $listing->update($fields);
+        $listing->update([...$fields, 'approved'=> false]);
 
         return redirect()->route('dashboard')->with('status', 'listing updated successfully');
     }

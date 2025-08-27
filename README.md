@@ -32,3 +32,13 @@
 
 # COntroll affichage
 pour controler l'affiche on se rend dans policies
+
+# pour valider la creation automatique des attributs de table et validate
+  -on touche le dossier factories et databaseSeeder.php
+  - php artsian migrate:fresh puis php artisan db:seed
+
+# Admin role
+  -creer un controller admin
+  -definir les routes de l'admin dans web.php
+  -creer  le dossiee admin
+  -creer 
