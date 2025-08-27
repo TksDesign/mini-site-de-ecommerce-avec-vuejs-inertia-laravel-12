@@ -27,3 +27,8 @@
 
 # recherche
   -la recherche concer les class listing.php ListingController:backend , home.vue card.vue:frontend
+# pour creer unn middleware particulier
+ -php artisan make:middleware NotSuspended(nom)
+
+# COntroll affichage
+pour controler l'affiche on se rend dans policies

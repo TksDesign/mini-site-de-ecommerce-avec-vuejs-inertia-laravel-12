@@ -5,7 +5,8 @@ import { router } from '@inertiajs/vue3';
 
 const props=defineProps({
     listing: Object,
-    user: Object
+    user: Object,
+    canModify:Boolean
 })
 
 const deleListing=()=>{
@@ -32,7 +33,7 @@ const deleListing=()=>{
                         listing details
                     </p>
                     <!-- edit and delete -->
-                    <div class="pl-4 flex items-center gap-2">
+                    <div v-if="canModify" class="pl-4 flex items-center gap-2">
                         <Link :href="route('listing.edit', listing.id)" 
                         class="bg-green-900 rounded-md text-white px-6 py-2
                         hover:outline outline-green-600 outline-offset-2">

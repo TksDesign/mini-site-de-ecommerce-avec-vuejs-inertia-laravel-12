@@ -8,59 +8,32 @@ use Illuminate\Auth\Access\Response;
 
 class ListingPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Listing $listing): bool
+    public function view(?User $user, Listing $listing): bool
     {
-        return false;
+        // on ajoute le qustion mark pour dire l'utilisateur n'est pas null car on veut authoriser a l'utilisateur non connecte de pouvoir se connecter
+        return $listing->user->role !=='suspended' &&  $listing->approved; //on va se rediriger vers listingcontroller dans la methode show
     }
 
     /**
      * Determine whether the user can create models.
+     * si l'utilisateur est suspendu il n'a pas besion d'acceder a la created page
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role !== 'suspended';
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Listing $listing): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Listing $listing): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Listing $listing): bool
-    {
-        return false;
-    }
 
     /**
      * Determine whether the user can permanently delete the model.
+     * on determine ici si un utilisateur peut modifeir ou suprimer 
      */
-    public function forceDelete(User $user, Listing $listing): bool
+    public function modify(User $user, Listing $listing): bool
     {
-        return false;
+        return $user->role !=='suspended' && $user->id === $listing->user_id;
     }
 }
