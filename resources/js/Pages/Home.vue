@@ -22,7 +22,7 @@ const username=params.user_id ? props.listings.data.find(i=>i.user_id===Number(p
 
 
 watch(
-    [() => form.value.search,
+    [() => form.value.search??null,
     () => params.user_id ?? null,
     params.tag ?? null,],
 

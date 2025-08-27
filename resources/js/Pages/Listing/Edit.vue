@@ -8,30 +8,34 @@ import TextArea from '../../components/TextArea.vue';
 import ErrorMessages from '../../components/ErrorMessages.vue';
 import ImageUpload from '../../components/imageUpload.vue';
 
+const props= defineProps({
+    listing:Object
+})
 
 const form = useForm({
-    title: null,
-    desc: null,
-    tags: null,
-    email: null,
-    link: null,
+    title: props.listing.title,
+    desc: props.listing.desc,
+    tags: props.listing.tags || null,
+    email: props.listing.email || null,
+    link: props.listing.link || null,
     image: null,
+    _method:'PUT' //a utiliser lorsqu'on veut soumettre une image avec une methode PUT
 
 })
 
 </script>
 
 <template>
-    <Header title=" | create listing"></Header>
-
+    <Header title=" | edit listing"></Header>
+{{ console.log(listing) }}
     <Container>
         <div class="mb-6">
-            <Title> Create de new listing</Title>
+            <Title> Edit de new listing</Title>
         </div>
         <ErrorMessages  :errors="form.errors"/>
-        <form @submit.prevent="form.post(route('listing.store'))" class="grid grid-cols-2 gap-6">
+        <form @submit.prevent="form.post(route('listing.update', listing.id))" class="grid grid-cols-2 gap-6">
             <div class=" space-y-6">
-                <InputField label="Title" icon="heading" placeholder="my new listing" v-model="form.title" />
+                <InputField label="Title" icon="heading" :placeholder="listing.title" v-model="form.title" />
                 <InputField label="tags (separate with comma)" icon="tags" placeholder="one, two, three"
                     v-model="form.tags" />
                 <TextArea label="description" icon="newspaper" placeholder="une petite description" v-model="form.desc"/>
@@ -41,11 +45,11 @@ const form = useForm({
                 <InputField label="External link" icon="up-right-form-square" placeholder="https://example.com"
                     v-model="form.link" />
                     <!-- on passe l'image au formulaire de soumission -->
-                <ImageUpload @image="(e)=> form.image=e"/> 
+                <ImageUpload :listingImage="listing.image" @image="(e)=>{ (form.image=e)}"/> 
 
             </div>
         <div>
-            <PrimaryBtn :disabled="form.processing">Create</PrimaryBtn>
+            <PrimaryBtn :disabled="form.processing">Update</PrimaryBtn>
         </div>
         </form>
     </Container>

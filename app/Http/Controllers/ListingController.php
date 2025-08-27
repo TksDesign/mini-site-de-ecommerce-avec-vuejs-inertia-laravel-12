@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class ListingController extends Controller
+class ListingController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -91,7 +91,7 @@ class ListingController extends Controller
     {
         return Inertia::render('Listing/Show', [
             'listing' => $listing,
-            'user' => $listing->user->only(['name','id']) //pour limiter les infos sur l'utilisateur au nom et a l'id
+            'user' => $listing->user->only(['name', 'id']) //pour limiter les infos sur l'utilisateur au nom et a l'id
         ]);
     }
 
@@ -100,19 +100,59 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
-        //
+        return Inertia::render('Listing/Edit', [
+            'listing' => $listing
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Listing $listing) {}
+    public function update(Request $request, Listing $listing)
+    {
+        $fields = $request->validate([
+            'title' => ['required', 'max:255'],
+            'desc' => ['required', 'max:5000'],
+            'tags' => ['nullable', 'string'],
+            'email' => ['nullable', 'email'],
+            'link' => ['nullable', 'url'],
+            'image' => ['nullable', 'file', 'max:3072'],
+
+        ]);
+
+        // enregistrer dans la base de donnée
+        if ($request->hasFile('image')) {
+            // on veut une nouvelle image donc supprimons l'ancienne
+            if ($listing->image) {
+                Storage::disk('public')->delete($listing->image);
+            }
+            //telecharger la nouvelle image
+            $fields['image'] = Storage::disk('public')->put(
+                'images/listing',
+                $request->image
+            ); //ou va etre enregistrer l'image
+        } else {
+            $fields['image'] = $listing->image;
+        };
+        // gerer le filtrage de tags
+        $fields['tags'] = implode(',', array_unique(array_filter(array_map('trim', explode(',', $request->tags)))));
+
+        // listing vient de l user.php qui represent la fonction de laison entre user et listing
+        $listing->update($fields);
+
+        return redirect()->route('dashboard')->with('status', 'listing updated successfully');
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Listing $listing)
     {
-        //
+        if ($listing->image) {
+            Storage::disk('public')->delete($listing->image);
+        }
+
+        $listing->delete();
+        return redirect()->route('dashboard')->with('status', 'listing deleted successfully');
     }
 }
